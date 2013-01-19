@@ -323,19 +323,19 @@ void process_string(char instruction[], int size)
 
     case 20: // Inches for Units
     case 21: // mm for Units
-      while (moving) {} // Do not try and do this while moving
+      while (!move_finished) {} // Do not try and do this while moving
       units_based_constants = (lastGCode == 20) ? units_based_constants_inch : units_based_constants_mm;
       calculateAccelConstants();
       break;
       
     case 90: // Absolute Positioning
     case 91: // Incremental Positioning
-      while (moving) {} // Do not try and do this while moving
+      while (!move_finished) {} // Do not try and do this while moving
       absMode = (lastGCode == 90) ? true : false;
       break;
 
     case 92: // Set absolute position - note that this must be G92 X?? Y?? Z?? and not just G92 alone which will in fact do nothing
-      while (moving) {} // Do not try and do this while moving
+      while (!move_finished) {} // Do not try and do this while moving
       for (unsigned int i = 0; i < 3; i++) {
         if (floatCodesSeen & (X_CODE_SEEN<<i)) { // Can do this because Z follows Y follows X
           current_move_ptr->target_units[i] = floatVals[X_CODE_INDEX + i];
