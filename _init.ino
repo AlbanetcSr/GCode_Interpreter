@@ -12,13 +12,13 @@
 #endif
 
 #ifdef GRBLSHIELD
-#define MICROSTEPS 4.0  // should be 8.0
+#define MICROSTEPS 4.0
 #endif
 
 // steppers
 #define FULL_STEPS_PER_REV 200.0
 
-// drivetrain ratios
+// drivetrain ratios (motor revolutions per unit travel)
 //
 // All-thread 1/4-20 leadscrew = 20.0
 // ACME 1/4-16 single start leadscrew = 16.0
@@ -40,25 +40,26 @@
 #define Z_STEPS_PER_MM   (Z_STEPS_PER_INCH / 25.4)
 
 // maximum stepper RPM (for G0 command)
-#define MAX_STEPPER_RPM 300.0
+#define MAX_STEPPER_RPM_XY 600.0
+#define MAX_STEPPER_RPM_Z 400.0
 
 // our maximum feedrates in units/minute
 // calculated from the above but can be overriden
-#define FAST_XY_FEEDRATE_INCH (MAX_STEPPER_RPM / X_REV_PER_INCH)
-#define FAST_Z_FEEDRATE_INCH  (MAX_STEPPER_RPM / Z_REV_PER_INCH)
+#define FAST_XY_FEEDRATE_INCH (MAX_STEPPER_RPM_XY / X_REV_PER_INCH)
+#define FAST_Z_FEEDRATE_INCH  (MAX_STEPPER_RPM_Z / Z_REV_PER_INCH)
 #define FAST_XY_FEEDRATE_MM (FAST_XY_FEEDRATE_INCH * 25.4)
 #define FAST_Z_FEEDRATE_MM  (FAST_Z_FEEDRATE_INCH * 25.4)
 
 // Maximum acceleration in units/minute/second
 // E.g. for 300.0 machine would accelerate to 150 units/minute in 0.5sec etc.
-#define MAX_ACCEL_INCH 100.0 //100.0 - screw //2000.0+ - belt
+#define MAX_ACCEL_INCH 100.0 //100.0 - screw //1000.0 - belt
 #define MAX_ACCEL_MM (MAX_ACCEL_INCH * 25.4)
 
 // Maximum change in velocity per axis - if the change in velocity at the start
 // of the next move is greater than this for at least one axis, we will decelerate
 // to a stop before commencing the move, otherwise we will keep going
 // value is units/minute
-#define MAX_DELTA_V_INCH 1.0
+#define MAX_DELTA_V_INCH 5.0
 #define MAX_DELTA_V_MM (MAX_DELTA_V_INCH * 25.4)
 
 // Set to one if endstop outputs are inverting (ie: 1 means open, 0 means closed)
