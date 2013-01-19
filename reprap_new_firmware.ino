@@ -18,6 +18,7 @@ volatile Move *current_move_ptr, *next_move_ptr;
 volatile bool have_next_move = false;
 volatile bool move_queue_lock_main = false;
 volatile bool moving = false;
+volatile bool move_finished = true;
 
 unsigned int timer1LoadValue, nextTimer1LoadValue;
 

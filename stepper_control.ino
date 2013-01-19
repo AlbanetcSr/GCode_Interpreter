@@ -6,7 +6,6 @@
 // volatile because they are being set and read in both the
 // main routine and in the interrupt handler
 volatile long step_counter[3];
-volatile bool move_finished = true;
 volatile long sequence_step_number;
 volatile long sequence_total_steps;
 volatile long sequence_steps_to_accelerate;
@@ -285,14 +284,18 @@ inline unsigned int Timer1Delay(unsigned int delay) {
 // queue if done
 ISR(TIMER1_COMPA_vect) {
   
-// Possible fix for microstepping issue with timer overflow  
-  TCNT1 = 0;                                        //reset timer
-  OCR1A = timer1LoadValue;                          //change timer value
+// Fix for microstepping issue with timer overflow (Arthur Wolf)
+//  TCNT1 = 0;                                        //reset timer
+//  OCR1A = timer1LoadValue;                          //change timer value
 
   // Because we re-enable interrupts below, we must manually check
   // to prevent reentrancy if the routine takes too long
   if (inTimer1InterruptRoutine) return;
   inTimer1InterruptRoutine = true;
+
+  // Fix for microstepping issue with timer overflow (alexmos)
+  // set very long time to disable timer1 interrupt until we are finished here
+  OCR1A = 0xffff;
   
   // Enable interrupts - this is not normally a good
   // idea in an interrupt routine, but we want
@@ -487,8 +490,9 @@ ISR(TIMER1_COMPA_vect) {
   // Load new value into compare match register (disabling interrupts first)
   cli();
   
-//  Possible fix for microstepping issue with timer overflow
-//  OCR1A = timer1LoadValue;
+//  Fix for microstepping issue with timer overflow 
+//  OCR1A = timer1LoadValue; // Arthur Wolf
+  OCR1A = max(timer1LoadValue, TCNT1+10); // alexmos
   
   // Clear flag preventing re-entrancy
   inTimer1InterruptRoutine = false;
