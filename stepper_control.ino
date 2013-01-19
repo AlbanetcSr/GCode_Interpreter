@@ -47,16 +47,6 @@ void init_steppers()
    disable_steppers();
 #endif
 
-#if ENDSTOPS_INVERTING == 1
-  // pull up limit switches
-  digitalWrite(X_MIN_PIN,HIGH);
-  digitalWrite(X_MAX_PIN,HIGH);
-  digitalWrite(Y_MIN_PIN,HIGH);
-  digitalWrite(Y_MAX_PIN,HIGH);
-  digitalWrite(Z_MIN_PIN,HIGH);
-  digitalWrite(Z_MAX_PIN,HIGH);
-#endif
-
   unsigned char step_pins[3] = { X_STEP_PIN, Y_STEP_PIN, Z_STEP_PIN };
   unsigned char dir_pins[3] = { X_DIR_PIN, Y_DIR_PIN, Z_DIR_PIN };
   unsigned char enable_pins[3] = { X_ENABLE_PIN, Y_ENABLE_PIN, Z_ENABLE_PIN };
@@ -87,9 +77,15 @@ void init_steppers()
     // Set mode for input pins (if applicable)
 #if ENDSTOPS_MIN_ENABLED == 1
     pinMode(min_pins[i], INPUT);
+#if ENDSTOPS_INVERTING == 1
+    digitalWrite(min_pins[i],HIGH);
+#endif
 #endif
 #if ENDSTOPS_MAX_ENABLED == 1
     pinMode(max_pins[i], INPUT);
+#if ENDSTOPS_INVERTING == 1
+    digitalWrite(max_pins[i],HIGH);
+#endif
 #endif
 
     // Start at zero
