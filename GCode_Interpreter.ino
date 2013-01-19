@@ -1,4 +1,4 @@
-#include "reprap_new_firmware.h"
+#include "GCode_Interpreter.h"
 
 #define COMMAND_SIZE 128
 char command[COMMAND_SIZE];
