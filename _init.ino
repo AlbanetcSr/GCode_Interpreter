@@ -12,7 +12,7 @@
 #endif
 
 #ifdef GRBLSHIELD
-#define MICROSTEPS 4.0
+#define MICROSTEPS 8.0
 #endif
 
 // steppers
@@ -25,8 +25,8 @@
 // ACME 1/4-16 four start leadscrew = 4.0
 // XL belt with 10T pulley = 0.5
 //
-#define X_REV_PER_INCH 20.0
-#define Y_REV_PER_INCH 20.0
+#define X_REV_PER_INCH 0.5
+#define Y_REV_PER_INCH 0.5
 #define Z_REV_PER_INCH 20.0
 
 // these are calculated from the above, but can be overriden
@@ -40,8 +40,8 @@
 #define Z_STEPS_PER_MM   (Z_STEPS_PER_INCH / 25.4)
 
 // maximum stepper RPM (for G0 command)
-#define MAX_STEPPER_RPM_XY 600.0
-#define MAX_STEPPER_RPM_Z 400.0
+#define MAX_STEPPER_RPM_XY 300.0
+#define MAX_STEPPER_RPM_Z 300.0
 
 // our maximum feedrates in units/minute
 // calculated from the above but can be overriden
@@ -52,14 +52,14 @@
 
 // Maximum acceleration in units/minute/second
 // E.g. for 300.0 machine would accelerate to 150 units/minute in 0.5sec etc.
-#define MAX_ACCEL_INCH 100.0 //100.0 - screw //1000.0 - belt
+#define MAX_ACCEL_INCH 2000.0 //100.0 - screw //1000.0 - belt
 #define MAX_ACCEL_MM (MAX_ACCEL_INCH * 25.4)
 
 // Maximum change in velocity per axis - if the change in velocity at the start
 // of the next move is greater than this for at least one axis, we will decelerate
 // to a stop before commencing the move, otherwise we will keep going
 // value is units/minute
-#define MAX_DELTA_V_INCH 5.0
+#define MAX_DELTA_V_INCH 50.0
 #define MAX_DELTA_V_MM (MAX_DELTA_V_INCH * 25.4)
 
 // Set to one if endstop outputs are inverting (ie: 1 means open, 0 means closed)
@@ -67,8 +67,8 @@
 #define ENDSTOPS_INVERTING 1
 
 // Optionally disable max endstops to save pins or wiring
-#define ENDSTOPS_MIN_ENABLED 1
-#define ENDSTOPS_MAX_ENABLED 1
+#define ENDSTOPS_MIN_ENABLED 0
+#define ENDSTOPS_MAX_ENABLED 0
 
 // How many temperature samples to take.  each sample takes about 100 usecs.
 #define TEMPERATURE_SAMPLES 5
@@ -89,7 +89,7 @@
 // stepper direction pins are inverted, set these defines to 1
 // for the axes which should be inverted.
 // RepRap stepper boards are *not* inverting.
-#define INVERT_DIR 0 // CHANGED CM - ONLY ONE FOR ALL AXES
+#define INVERT_DIR 1 // CHANGED CM - ONLY ONE FOR ALL AXES
 
 #define STEPPERS_ALWAYS_ON 0
 
